@@ -6,6 +6,7 @@ const schema = z.object({
   MONGODB_URI: z.string().regex(/^mongodb(?:\+srv)?:\/\//).refine(v => !/[<>]/.test(v)),
   FIREBASE_PROJECT_ID: z.string().min(3).refine(v => v !== 'your-project-id'),
   GOOGLE_APPLICATION_CREDENTIALS: z.string().optional(),
+  FIREBASE_SERVICE_ACCOUNT_JSON: z.string().optional(),
   FIREBASE_AUTH_EMULATOR_HOST: z.string().optional(),
   GROQ_API_KEY: z.string().optional(),
   GROQ_MODEL: z.string().optional(),

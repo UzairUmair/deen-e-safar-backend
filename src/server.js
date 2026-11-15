@@ -7,6 +7,7 @@ import { createModels } from './models/index.js';
 import { MongoRepository } from './repositories/mongoRepository.js';
 import { createApp } from './createApp.js';
 let connection, server;
+let startupStage = 'environment configuration';
 const shutdown = new AbortController();
 async function stop() {
   shutdown.abort();
@@ -16,10 +17,14 @@ async function stop() {
 }
 try {
   const env = loadEnv();
+  startupStage = 'MongoDB connection';
   connection = await connectDatabase(env.MONGODB_URI);
+  startupStage = 'MongoDB index initialization';
   const repo = new MongoRepository(connection, createModels(connection));
   await repo.initialize();
+  startupStage = 'Firebase Admin credentials';
   const firebase = await initializeAdmin(env);
+  startupStage = 'Express initialization';
   // Vercel detects Express only when the entry file imports it directly.
   const app = express();
   createApp({ repo, firebase, provider: createGroqProvider(env), env, shutdownSignal: shutdown.signal }, app);
@@ -29,6 +34,6 @@ try {
   connection.on('disconnected', () => console.warn('Database connection unavailable.'));
   process.once('SIGINT', stop); process.once('SIGTERM', stop);
 } catch (error) {
-  console.error(error.code === 'CONFIG_INVALID' ? error.message : 'Backend startup failed. Check database access and Firebase Admin configuration.');
+  console.error(error.code === 'CONFIG_INVALID' ? error.message : `Backend startup failed during ${startupStage}. Check production configuration.`);
   await connection?.close(); process.exitCode = 1;
 }

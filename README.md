@@ -73,6 +73,14 @@ src/createApp.js so Vercel does not mistake it for an executable app entry point
 Set production environment variables and Firebase Admin credentials securely in
 Vercel before redeploying. The browser Firebase web configuration is not an Admin
 credential. Verify /api/health after deployment; the API root / is not a website.
+For Vercel, set MONGODB_URI to the full database URI with the actual URL-encoded
+database password, FIREBASE_PROJECT_ID=deen-e-safar, and
+CLIENT_ORIGIN=https://deen-e-safar-six.vercel.app. Set FIREBASE_SERVICE_ACCOUNT_JSON
+as a Vercel Secret containing the complete Admin service-account JSON for that
+project (Firebase Console > Project settings > Service accounts). This is an
+alternative to file-based ADC; leave GOOGLE_APPLICATION_CREDENTIALS unset for it.
+Never use the browser Firebase configuration as the Admin JSON. Redeploy after
+changing environment variables. The startup validator reports missing names only.
 This entry-point change is checked locally with API tests; a successful live
 startup still depends on configured MongoDB and Firebase access.
 

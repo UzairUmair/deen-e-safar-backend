@@ -15,7 +15,11 @@ The static output is out/; hash routes stay within the existing static frontend.
 Backend: copy .env.example to .env securely. Set a freshly rotated MONGODB_URI
 and FIREBASE_PROJECT_ID matching the frontend (deen-e-safar for the supplied
 project). Use Firebase Admin ADC/workload identity, or GOOGLE_APPLICATION_CREDENTIALS
-pointing to a protected JSON file outside the repository. Allow the API host in
+pointing to a protected JSON file outside the repository.
+Vercel can instead use FIREBASE_SERVICE_ACCOUNT_JSON as a Secret
+containing the complete Admin JSON for FIREBASE_PROJECT_ID; leave
+GOOGLE_APPLICATION_CREDENTIALS unset with that alternative. Never use the browser
+firebaseConfig object as an Admin credential. Allow the API host in
 Atlas networking; use a database user restricted to deen_e_safar. Local MongoDB
 must be a replica set. CLIENT_ORIGIN is a comma-separated list of exact frontend
 origins, without paths or wildcards. Production requires HTTPS. Configure
