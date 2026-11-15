@@ -9,7 +9,7 @@ No frontend checkout is needed to start this API or run its automated tests.
 
 ## Run
 
-Use Node.js 22 or 24 LTS:
+Use Node.js 24 LTS (also pinned for Vercel):
 
 ```sh
 npm ci
@@ -66,7 +66,7 @@ repository paths.
 ## Vercel
 
 Use the Express framework preset and the repository root as the project root.
-The detected entry point is src/server.js, which initializes the database and
+The detected entry point is src/server.js, which directly imports Express and initializes the database and
 Firebase Admin before calling app.listen(). The injectable factory is named
 src/createApp.js so Vercel does not mistake it for an executable app entry point.
 

@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 import mongoose from 'mongoose';
 import { MongoMemoryReplSet } from 'mongodb-memory-server';
 import request from 'supertest';
+import express from 'express';
 import { createModels } from '../src/models/index.js';
 import { MongoRepository } from '../src/repositories/mongoRepository.js';
 import { createApp } from '../src/createApp.js';
@@ -43,7 +44,7 @@ beforeEach(async () => {
   for (const model of Object.values(models)) await model.deleteMany({});
   deleted = new Set();
   provider = { configured: true, calls: 0, async complete() { this.calls++; return JSON.stringify({ answer: 'The retrieved passage discusses patience. [quran:2:153:en]', sourceIds: [source.sourceId], limitations: 'Read the passage in context.' }); } };
-  app = createApp({ repo, firebase, provider, env, audit: () => {} });
+  app = createApp({ repo, firebase, provider, env, audit: () => {} }, express());
 });
 test('health, explicit CORS, malformed JSON and request size limits', async () => {
   const health = await request(app).get('/api/health').expect(200); assert.equal(health.body.data.capabilities.generatedAI, false);

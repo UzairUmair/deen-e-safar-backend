@@ -6,8 +6,7 @@ import { apiRoutes } from './routes/api.js';
 import { aiService } from './services/groqService.js';
 import { ApiError } from './utils/apiError.js';
 import { errorHandler, ipLimiter } from './middleware/security.js';
-export function createApp({ repo, firebase, provider, env, audit = event => console.info(JSON.stringify(event)), shutdownSignal = new AbortController().signal, ipLimit = 1200 }) {
-  const app = express();
+export function createApp({ repo, firebase, provider, env, audit = event => console.info(JSON.stringify(event)), shutdownSignal = new AbortController().signal, ipLimit = 1200 }, app = express()) {
   app.disable('x-powered-by');
   app.set('trust proxy', env.TRUST_PROXY_HOPS || false);
   app.locals.audit = audit;

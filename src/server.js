@@ -1,3 +1,4 @@
+import express from 'express';
 import { loadEnv } from './config/env.js';
 import { connectDatabase } from './config/database.js';
 import { initializeAdmin } from './config/firebaseAdmin.js';
@@ -19,7 +20,9 @@ try {
   const repo = new MongoRepository(connection, createModels(connection));
   await repo.initialize();
   const firebase = await initializeAdmin(env);
-  const app = createApp({ repo, firebase, provider: createGroqProvider(env), env, shutdownSignal: shutdown.signal });
+  // Vercel detects Express only when the entry file imports it directly.
+  const app = express();
+  createApp({ repo, firebase, provider: createGroqProvider(env), env, shutdownSignal: shutdown.signal }, app);
   server = app.listen(env.PORT, env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1', () => console.info(JSON.stringify({ event: 'server_started', port: env.PORT })));
   server.headersTimeout = 15000; server.requestTimeout = 30000; server.keepAliveTimeout = 5000;
   server.on('error', async () => { console.error('Server listener failed.'); await stop(); process.exitCode = 1; });

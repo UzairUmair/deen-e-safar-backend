@@ -5,7 +5,7 @@ out/
 .env*
 !.env.example
 credentials/
-data/
+/data/
 **/*service-account*.json
 *-debug.log
 .openai/
