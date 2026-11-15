@@ -4,7 +4,7 @@ import { connectDatabase } from '../src/config/database.js';
 import { initializeAdmin } from '../src/config/firebaseAdmin.js';
 import { createModels } from '../src/models/index.js';
 import { MongoRepository } from '../src/repositories/mongoRepository.js';
-import { createApp } from '../src/app.js';
+import { createApp } from '../src/createApp.js';
 if (process.env.NODE_ENV !== 'development' || process.env.FIREBASE_AUTH_EMULATOR_HOST !== '127.0.0.1:9099' || process.env.FIREBASE_PROJECT_ID !== 'demo-deen-e-safar') throw new Error('Run only with the documented local emulator configuration.');
 const replica = await MongoMemoryReplSet.create({ replSet: { count: 1, storageEngine: 'wiredTiger' } });
 const connection = await connectDatabase(replica.getUri());

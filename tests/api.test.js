@@ -7,7 +7,7 @@ import { MongoMemoryReplSet } from 'mongodb-memory-server';
 import request from 'supertest';
 import { createModels } from '../src/models/index.js';
 import { MongoRepository } from '../src/repositories/mongoRepository.js';
-import { createApp } from '../src/app.js';
+import { createApp } from '../src/createApp.js';
 import { hashSource, termsOf } from '../src/services/retrievalService.js';
 import { validateCitations } from '../src/services/citationValidator.js';
 import { loadEnv } from '../src/config/env.js';

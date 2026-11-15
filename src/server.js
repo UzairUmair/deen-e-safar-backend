@@ -4,7 +4,7 @@ import { initializeAdmin } from './config/firebaseAdmin.js';
 import { createGroqProvider } from './config/groq.js';
 import { createModels } from './models/index.js';
 import { MongoRepository } from './repositories/mongoRepository.js';
-import { createApp } from './app.js';
+import { createApp } from './createApp.js';
 let connection, server;
 const shutdown = new AbortController();
 async function stop() {

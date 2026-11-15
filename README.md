@@ -62,3 +62,16 @@ trust settings. Nothing is automatically deployed by pushing this repository.
 Current configuration and emulator instructions: docs/setup.md. Other historical
 reports may refer to the former combined workspace; use this README for current
 repository paths.
+
+## Vercel
+
+Use the Express framework preset and the repository root as the project root.
+The detected entry point is src/server.js, which initializes the database and
+Firebase Admin before calling app.listen(). The injectable factory is named
+src/createApp.js so Vercel does not mistake it for an executable app entry point.
+
+Set production environment variables and Firebase Admin credentials securely in
+Vercel before redeploying. The browser Firebase web configuration is not an Admin
+credential. Verify /api/health after deployment; the API root / is not a website.
+This entry-point change is checked locally with API tests; a successful live
+startup still depends on configured MongoDB and Firebase access.
