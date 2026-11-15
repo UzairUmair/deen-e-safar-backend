@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: deen-e-safar-api
+    runtime: docker
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_ORIGIN
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: GOOGLE_APPLICATION_CREDENTIALS
+        value: /etc/secrets/firebase-admin.json
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        sync: false
+      - key: TRUST_PROXY_HOPS
+        value: "1"

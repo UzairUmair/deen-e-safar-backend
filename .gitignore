@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+.env*
+!.env.example
+credentials/
+data/
+**/*service-account*.json
+*-debug.log
+.openai/
