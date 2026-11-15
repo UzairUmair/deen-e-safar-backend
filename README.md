@@ -75,3 +75,8 @@ Vercel before redeploying. The browser Firebase web configuration is not an Admi
 credential. Verify /api/health after deployment; the API root / is not a website.
 This entry-point change is checked locally with API tests; a successful live
 startup still depends on configured MongoDB and Firebase access.
+
+The scoped jwks-rsa/jose override keeps Firebase Admin compatible with the
+Vercel loader, which cannot use Node's require(ESM) support. Remove it only after
+the upstream loader compatibility issue is resolved and the runtime test passes:
+https://github.com/auth0/node-jwks-rsa/issues/507.
