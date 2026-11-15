@@ -67,7 +67,10 @@ repository paths.
 
 Use the Express framework preset and the repository root as the project root.
 The detected entry point is src/server.js, which directly imports Express and initializes the database and
-Firebase Admin before calling app.listen(). The injectable factory is named
+Firebase Admin before serving requests. It default-exports the Express app for
+Vercel; local hosting uses app.listen(). If initialization fails, Vercel returns
+a closed 503 handler and the server logs identify the failing startup stage.
+The injectable factory is named
 src/createApp.js so Vercel does not mistake it for an executable app entry point.
 
 Set production environment variables and Firebase Admin credentials securely in

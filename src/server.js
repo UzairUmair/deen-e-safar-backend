@@ -6,6 +6,10 @@ import { createGroqProvider } from './config/groq.js';
 import { createModels } from './models/index.js';
 import { MongoRepository } from './repositories/mongoRepository.js';
 import { createApp } from './createApp.js';
+// Always expose a valid Vercel handler, including when startup configuration fails.
+const app = express();
+app.disable('x-powered-by');
+export default app;
 let connection, server;
 let startupStage = 'environment configuration';
 const shutdown = new AbortController();
@@ -26,14 +30,19 @@ try {
   const firebase = await initializeAdmin(env);
   startupStage = 'Express initialization';
   // Vercel detects Express only when the entry file imports it directly.
-  const app = express();
   createApp({ repo, firebase, provider: createGroqProvider(env), env, shutdownSignal: shutdown.signal }, app);
-  server = app.listen(env.PORT, env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1', () => console.info(JSON.stringify({ event: 'server_started', port: env.PORT })));
-  server.headersTimeout = 15000; server.requestTimeout = 30000; server.keepAliveTimeout = 5000;
-  server.on('error', async () => { console.error('Server listener failed.'); await stop(); process.exitCode = 1; });
+  if (process.env.VERCEL !== '1') {
+    server = app.listen(env.PORT, env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1', () => console.info(JSON.stringify({ event: 'server_started', port: env.PORT })));
+    server.headersTimeout = 15000; server.requestTimeout = 30000; server.keepAliveTimeout = 5000;
+    server.on('error', async () => { console.error('Server listener failed.'); await stop(); process.exitCode = 1; });
+  }
   connection.on('disconnected', () => console.warn('Database connection unavailable.'));
   process.once('SIGINT', stop); process.once('SIGTERM', stop);
 } catch (error) {
   console.error(error.code === 'CONFIG_INVALID' ? error.message : `Backend startup failed during ${startupStage}. Check production configuration.`);
-  await connection?.close(); process.exitCode = 1;
+  await connection?.close();
+  app.use((_req, res) => res.set('Cache-Control', 'no-store').status(503).json({
+    error: { code: 'SERVICE_UNAVAILABLE', message: 'The backend is not ready. Please try again later.' },
+  }));
+  if (process.env.VERCEL !== '1') process.exitCode = 1;
 }
