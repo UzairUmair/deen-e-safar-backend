@@ -47,6 +47,9 @@ beforeEach(async () => {
   app = createApp({ repo, firebase, provider, env, audit: () => {} }, express());
 });
 test('health, explicit CORS, malformed JSON and request size limits', async () => {
+  await request(app).get('/').expect(307).expect('Location', '/api/health');
+  await request(app).get('/').redirects(1).expect(200);
+  await request(app).get('/missing-endpoint').expect(404);
   const health = await request(app).get('/api/health').expect(200); assert.equal(health.body.data.capabilities.generatedAI, false);
   await request(app).get('/api/health').set('Origin', 'https://untrusted.example').expect(403);
   const allowed = await request(app).get('/api/health').set('Origin', env.origins[0]).expect(200); assert.equal(allowed.headers['access-control-allow-origin'], env.origins[0]);
