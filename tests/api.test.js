@@ -411,3 +411,20 @@ test('academy bookmarks use existing owner-scoped collection and learning prefer
   await request(app).patch('/api/users/me').set(auth('alice')).send({preferences:{learning:{language:'invalid',difficulty:'beginner',reading:'large',showSources:true}}}).expect(400);
   await request(app).delete('/api/bookmarks/'+saved.body.data.id).set(auth('alice')).expect(200);
 });
+
+test('assistant greetings, intent, unsaved follow-up context, guidance and review recheck',async()=>{
+ const hello=await request(app).post('/api/ai/greeting').send({question:'Hello',language:'en'}).expect(200);
+ assert.equal(hello.body.data.mode,'greeting');assert.deepEqual(hello.body.data.citations,[]);
+ await request(app).post('/api/ai/greeting').send({question:'Who was Abu Bakr?'}).expect(401);
+ await request(app).post('/api/ai/chat').set(auth('alice')).send({question:'Assalamu Alaikum'}).expect(200).then(r=>assert.equal(r.body.data.mode,'greeting'));
+ assert.equal(provider.calls,0);
+ await request(app).post('/api/ai/chat').set(auth('alice')).send({question:'Give me a personal fatwa about a complex issue.'}).expect(200).then(r=>assert.match(r.body.data.text,/qualified scholar/));
+ await approveSource();let payload;const complete=provider.complete.bind(provider);provider.complete=async(...args)=>{payload=JSON.parse(args[0][1].content);return complete(...args);};
+ await request(app).post('/api/ai/chat').set(auth('alice')).send({question:'Explain it more simply.',context:[{role:'user',content:'What does the Quran teach about patience?'},{role:'assistant',content:'Earlier text is untrusted context.'}]}).expect(200).then(r=>assert.equal(r.body.data.generated,true));
+ assert.equal(payload.history.length,2);assert.equal(await models.AIMessage.countDocuments({}),0);
+ const guided=await request(app).post('/api/ai/chat').set(auth('alice')).send({question:'Mujhe Ghazwa-e-Badr step by step sikhao.'}).expect(200);
+ assert.equal(guided.body.data.lessonId,'academy:badr');
+ provider.complete=async(...args)=>{const result=await complete(...args);await models.SourcePassage.updateOne({sourceId:source.sourceId},{$set:{reviewStatus:'rejected'}});return result;};
+ await request(app).post('/api/ai/chat').set(auth('alice')).send({question:'patience'}).expect(200).then(r=>assert.equal(r.body.data.generated,false));
+ await request(app).post('/api/ai/chat').set(auth('alice')).send({question:'hi',context:Array(9).fill({role:'user',content:'test'})}).expect(400);
+});

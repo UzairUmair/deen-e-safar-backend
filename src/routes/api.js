@@ -1,3 +1,4 @@
+import {classifyIntent,detectLanguage,localReply} from '../services/assistantIntent.js';
 import { academyRoutes } from './academy.js';
 import { ingestSource } from '../services/sourceIngestionService.js';
 import { Router } from 'express';
@@ -19,10 +20,11 @@ export function apiRoutes({ repo, firebase, ai, provider, env, shutdownSignal, a
     const ready = repo.ready();
     let evidence = false;
     if (ready && ai.configured) { try { evidence = Boolean(await repo.one('SourcePassage', approvedFilter)); } catch { /* no readiness claim on failure */ } }
-    data(res, { status: ready ? 'ready' : 'not_ready', capabilities: { accounts: ready, generatedAI: ready && ai.configured && evidence } }, ready ? 200 : 503);
+    data(res, { status: ready ? 'ready' : 'not_ready', capabilities: { accounts: ready, providerConfigured: ai.configured, reviewedEvidence: evidence, generatedAI: ready && ai.configured && evidence } }, ready ? 200 : 503);
   });
   const academy = academyRoutes({repo,provider,env,shutdownSignal,audit});
   router.use('/academy',academy.publicRoutes);
+  router.post('/ai/greeting',(req,res)=>{const body=parse(z.strictObject({question:z.string().trim().min(2).max(2000),language:z.enum(['auto','en','ur','roman-ur']).default('auto')}),req.body);if(classifyIntent(body.question)!=='greeting')throw new ApiError(401,'AUTH_REQUIRED','Sign in and verify your email to request source-grounded answers.');data(res,localReply('greeting',detectLanguage(body.question,body.language)));});
   router.use(verifyFirebaseToken(firebase, users, env.FIREBASE_PROJECT_ID));
   router.use('/academy',academy.privateRoutes);
   router.post('/auth/sync', (req, res) => { parse(empty, req.body || {}); data(res, publicProfile(req.user)); });

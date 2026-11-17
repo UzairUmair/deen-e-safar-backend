@@ -21,6 +21,7 @@ if(fixtures){
 }
 const provider=fixtures?{configured:true,async complete(messages){
   const input=JSON.parse(messages[1].content),ids=input.evidence.map(s=>s.sourceId);
+  if(!input.request)return JSON.stringify({answer:input.language==='ur'?'یہ آیت صبر اور نماز کا ذکر کرتی ہے۔':input.language==='roman-ur'?'Yeh ayat sabr aur namaz ka zikr karti hai.':'This passage connects patience and prayer.',sourceIds:ids,limitations:'Controlled local mock; not a live Groq answer.'});
   if(input.request.question?.includes('SIMULATE_UNAVAILABLE'))throw Error('controlled provider outage');
   if(input.request.action==='quiz')return JSON.stringify({question:input.request.quizKind==='true-false'?'The passage connects patience with prayer.':'Which practice is paired with patience?',options:input.request.quizKind==='true-false'?['True','False']:['Prayer','Wealth','Travel','Silence'],correct:0,explanation:'The supplied passage mentions prayer with patience.',sourceIds:ids});
   return JSON.stringify({keyTerms:['patience','prayer'],answer:input.request.language==='ur'?'اس آیت میں صبر اور نماز کے ذریعے مدد طلب کرنے کا ذکر ہے۔':input.request.language==='roman-ur'?'Is ayat mein sabr aur namaz ke zariye madad talab karne ka zikr hai.':'This passage connects patience and prayer.',sourceIds:ids,limitations:'Controlled local mock; not a live Groq answer.',keyPoints:['Read the passage in context.'],uncertaintyNotes:[]});
