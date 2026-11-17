@@ -20,7 +20,7 @@ export function createApp({ repo, firebase, provider, env, audit = event => cons
   app.use('/api/users/me/guest-import', express.json({ limit: '256kb', strict: true }));
   app.use(express.json({ limit: '64kb', strict: true }));
   app.get('/', (_req, res) => res.redirect(307, '/api/health'));
-  app.use('/api', apiRoutes({ repo, firebase, ai: aiService(repo, provider), env, shutdownSignal }));
+  app.use('/api', apiRoutes({ repo, firebase, ai: aiService(repo, provider), env, shutdownSignal, provider, audit }));
   app.use((_req, _res, next) => next(new ApiError(404, 'NOT_FOUND', 'The requested endpoint was not found.')));
   app.use(errorHandler);
   return app;

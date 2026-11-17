@@ -91,3 +91,19 @@ The scoped jwks-rsa/jose override keeps Firebase Admin compatible with the
 Vercel loader, which cannot use Node's require(ESM) support. Remove it only after
 the upstream loader compatibility issue is resolved and the runtime test passes:
 https://github.com/auth0/node-jwks-rsa/issues/507.
+
+
+## AI Academy (local implementation)
+
+See [implementation report](docs/ai-academy-implementation-report.md),
+[architecture](docs/ai-academy-architecture.md), [API](docs/ai-academy-api.md),
+[source policy](docs/ai-academy-source-policy.md) and [testing](docs/ai-academy-testing.md).
+Historical source review and publication remain pending.
+
+[Historical source research](docs/ai-academy-source-research.md) and
+[adding reviewed passages](docs/ai-academy-content-review.md) describe licensing
+and runtime lesson assignments. No publication or automatic approval.
+
+## Account and learning redesign (local)
+
+See [account design](docs/account-page-design.md), [academy design](docs/learn-islam-design.md), [image manifest](docs/academy-image-manifest.md), [source policy](docs/academy-source-policy.md), and [test report](docs/account-and-learning-test-report.md).

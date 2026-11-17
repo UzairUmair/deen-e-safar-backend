@@ -1,3 +1,5 @@
+import { academyRoutes } from './academy.js';
+import { ingestSource } from '../services/sourceIngestionService.js';
 import { Router } from 'express';
 import { z } from 'zod';
 import * as v from '../validation.js';
@@ -5,10 +7,10 @@ import { parse, empty, verifyFirebaseToken, requireAdmin, quota } from '../middl
 import { userService, publicProfile } from '../services/userService.js';
 import { accountService, listPage, publicRecord } from '../services/accountService.js';
 import { importGuest } from '../services/guestMigrationService.js';
-import { approvedFilter, hashSource, termsOf } from '../services/retrievalService.js';
+import { approvedFilter } from '../services/retrievalService.js';
 import { ApiError, missing } from '../utils/apiError.js';
 import { validReference } from '../config/catalog.js';
-export function apiRoutes({ repo, firebase, ai, env, shutdownSignal }) {
+export function apiRoutes({ repo, firebase, ai, provider, env, shutdownSignal, audit }) {
   const router = Router(), users = userService(repo, firebase), accounts = accountService(repo);
   const id = value => parse(v.objectId, value);
   const page = query => parse(v.pageQuery, query);
@@ -19,7 +21,10 @@ export function apiRoutes({ repo, firebase, ai, env, shutdownSignal }) {
     if (ready && ai.configured) { try { evidence = Boolean(await repo.one('SourcePassage', approvedFilter)); } catch { /* no readiness claim on failure */ } }
     data(res, { status: ready ? 'ready' : 'not_ready', capabilities: { accounts: ready, generatedAI: ready && ai.configured && evidence } }, ready ? 200 : 503);
   });
+  const academy = academyRoutes({repo,provider,env,shutdownSignal,audit});
+  router.use('/academy',academy.publicRoutes);
   router.use(verifyFirebaseToken(firebase, users, env.FIREBASE_PROJECT_ID));
+  router.use('/academy',academy.privateRoutes);
   router.post('/auth/sync', (req, res) => { parse(empty, req.body || {}); data(res, publicProfile(req.user)); });
   router.get('/users/me', (req, res) => data(res, publicProfile(req.user)));
   router.patch('/users/me', async (req, res) => data(res, publicProfile(await users.update(req.user, parse(v.profilePatch, req.body)))));
@@ -36,7 +41,7 @@ export function apiRoutes({ repo, firebase, ai, env, shutdownSignal }) {
   const surah = value => parse(z.coerce.number().int().min(1).max(114), value);
   router.get('/reading-progress/:surah', async (req, res) => { const row = await repo.one('ReadingProgress', { userId: req.user._id, surahNumber: surah(req.params.surah) }); data(res, row ? publicRecord(row) : null); });
   router.put('/reading-progress/:surah', async (req, res) => data(res, publicRecord(await accounts.reading(req.user._id, surah(req.params.surah), parse(v.reading, req.body)))));
-  router.get('/learning-progress', async (req, res) => { parse(empty, req.query); data(res, (await repo.find('LearningProgress', { userId: req.user._id }, { limit: 15 })).map(publicRecord)); });
+  router.get('/learning-progress', async (req, res) => { parse(empty, req.query); data(res, (await repo.find('LearningProgress', { userId: req.user._id, lessonId: { $not: /^academy:/ } }, { limit: 15 })).map(publicRecord)); });
   router.put('/learning-progress/:lessonId', async (req, res) => data(res, publicRecord(await accounts.learning(req.user._id, parse(z.string().regex(/^\d{1,2}$/), req.params.lessonId), parse(v.learning, req.body)))));
   router.post('/quiz-attempts', async (req, res) => data(res, publicRecord(await accounts.quiz(req.user._id, parse(v.quiz, req.body))), 201));
   router.get('/quiz-attempts', async (req, res) => res.json(await listPage(repo, 'QuizAttempt', { userId: req.user._id }, page(req.query))));
@@ -82,7 +87,8 @@ export function apiRoutes({ repo, firebase, ai, env, shutdownSignal }) {
   router.get('/admin/sources', async (req, res) => res.json(await listPage(repo, 'SourcePassage', {}, page(req.query))));
   router.post('/admin/sources', async (req, res) => {
     const source = parse(v.proposedSource, req.body);
-    const value = await repo.upsert('SourcePassage', { sourceId: source.sourceId }, { ...source, contentHash: hashSource(source), terms: termsOf(source.text + ' ' + source.reference), reviewStatus: 'pending', licenseMetadata: { status: 'unverified' } });
+    await ingestSource(repo,source);
+    const value=await repo.one('SourcePassage',{sourceId:source.sourceId});
     req.app.locals.audit({ event: 'source_proposed', actor: req.identity.uid, sourceId: source.sourceId });
     data(res, publicRecord(value), 201);
   });

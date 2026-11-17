@@ -1,0 +1,1348 @@
+{
+  "version": 1,
+  "tracks": [
+    {
+      "id": "seerah",
+      "title": "Seerat-un-Nabi ﷺ",
+      "titleUr": "سیرت النبی ﷺ",
+      "description": "Study the Prophetic example through evidence, context and careful questions."
+    },
+    {
+      "id": "sahaba",
+      "title": "Stories of the Sahaba",
+      "titleUr": "صحابہ کی زندگیاں",
+      "description": "Explore contributions and character without fictional conversations."
+    },
+    {
+      "id": "events",
+      "title": "Events and Ghazawat",
+      "titleUr": "اہم واقعات اور غزوات",
+      "description": "Study historical events with context and explicit limits."
+    },
+    {
+      "id": "prophets",
+      "title": "Lives of the Prophets",
+      "titleUr": "انبیاء کی زندگیاں",
+      "description": "Begin with Quranic accounts, keeping later narratives distinct."
+    },
+    {
+      "id": "quran",
+      "title": "Understanding the Quran",
+      "titleUr": "فہم قرآن",
+      "description": "Read themes and passages with attributed translations."
+    },
+    {
+      "id": "hadith",
+      "title": "Hadith Learning",
+      "titleUr": "حدیث کا مطالعہ",
+      "description": "Learn attribution, grading and careful interpretation."
+    },
+    {
+      "id": "fundamentals",
+      "title": "Islamic Fundamentals",
+      "titleUr": "اسلام کی بنیادی تعلیمات",
+      "description": "Connect worship, belief and everyday character."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "academy:prophetic-example",
+      "trackId": "seerah",
+      "title": "Studying the Prophetic example",
+      "titleUr": "اسوۂ نبوی کا مطالعہ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "33:21",
+            "21:107",
+            "17:36"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "33:21",
+            "21:107",
+            "17:36"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "33:21",
+            "21:107",
+            "17:36"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:first-revelation",
+      "trackId": "seerah",
+      "title": "First revelation: reading the evidence",
+      "titleUr": "پہلی وحی: شواہد کا مطالعہ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "96:1",
+            "96:2",
+            "96:3"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "96:1",
+            "96:2",
+            "96:3"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "96:1",
+            "96:2",
+            "96:3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:hijrah",
+      "trackId": "seerah",
+      "title": "Hijrah: a Quranic starting point",
+      "titleUr": "ہجرت: قرآن سے آغاز",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "9:40"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "9:40"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "9:40"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:farewell",
+      "trackId": "seerah",
+      "title": "Enduring teachings and responsibility",
+      "titleUr": "پائیدار تعلیمات اور ذمہ داری",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "5:3",
+            "49:13"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "5:3",
+            "49:13"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "5:3",
+            "49:13"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:abu-bakr",
+      "trackId": "sahaba",
+      "title": "Abu Bakr (RA): a biography to review",
+      "titleUr": "ابوبکرؓ: سوانح کا جائزہ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:bilal",
+      "trackId": "sahaba",
+      "title": "Bilal (RA): a biography to review",
+      "titleUr": "بلالؓ: سوانح کا جائزہ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:khadijah",
+      "trackId": "sahaba",
+      "title": "Khadijah (RA): a biography to review",
+      "titleUr": "خدیجہؓ: سوانح کا جائزہ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:badr",
+      "trackId": "events",
+      "title": "Badr: Quranic passages and their limits",
+      "titleUr": "بدر: قرآنی شواہد اور ان کی حدود",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "3:123",
+            "8:9",
+            "8:10"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "3:123",
+            "8:9",
+            "8:10"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "3:123",
+            "8:9",
+            "8:10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:uhud",
+      "trackId": "events",
+      "title": "Uhud: begin with the passage",
+      "titleUr": "احد: آیات سے آغاز",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "3:121",
+            "3:152"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "3:121",
+            "3:152"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "3:121",
+            "3:152"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:khandaq",
+      "trackId": "events",
+      "title": "Khandaq: context needs review",
+      "titleUr": "خندق: تاریخی سیاق کا جائزہ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "33:9",
+            "33:10"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "33:9",
+            "33:10"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "33:9",
+            "33:10"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:hudaybiyyah",
+      "trackId": "events",
+      "title": "Hudaybiyyah: sources before narrative",
+      "titleUr": "حدیبیہ: روایت سے پہلے ماخذ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:makkah",
+      "trackId": "events",
+      "title": "Conquest of Makkah: source review",
+      "titleUr": "فتح مکہ: ماخذ کا جائزہ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:yusuf",
+      "trackId": "prophets",
+      "title": "Yusuf: reading the Quranic account",
+      "titleUr": "یوسفؑ: قرآنی بیان کا مطالعہ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "12:4",
+            "12:5",
+            "12:6"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "12:4",
+            "12:5",
+            "12:6"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "12:4",
+            "12:5",
+            "12:6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:musa",
+      "trackId": "prophets",
+      "title": "Musa: a prayer for understanding",
+      "titleUr": "موسیٰؑ: فہم کی دعا",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "20:25",
+            "20:26",
+            "20:27",
+            "20:28"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "20:25",
+            "20:26",
+            "20:27",
+            "20:28"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "20:25",
+            "20:26",
+            "20:27",
+            "20:28"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:reflection",
+      "trackId": "quran",
+      "title": "Reading with reflection",
+      "titleUr": "غور و فکر کے ساتھ مطالعہ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "38:29",
+            "20:114"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "38:29",
+            "20:114"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "38:29",
+            "20:114"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:patience",
+      "trackId": "quran",
+      "title": "Patience and prayer",
+      "titleUr": "صبر اور نماز",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "2:153"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "2:153"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "2:153"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:hadith-method",
+      "trackId": "hadith",
+      "title": "Hadith: attribution before interpretation",
+      "titleUr": "حدیث: تشریح سے پہلے حوالہ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:belief-conduct",
+      "trackId": "fundamentals",
+      "title": "Faith and everyday conduct",
+      "titleUr": "ایمان اور روزمرہ کردار",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "2:177",
+            "4:36"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "2:177",
+            "4:36"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "2:177",
+            "4:36"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:fasting",
+      "trackId": "fundamentals",
+      "title": "Fasting: purpose and responsibility",
+      "titleUr": "روزہ: مقصد اور ذمہ داری",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "2:183",
+            "2:185"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "2:183",
+            "2:185"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "2:183",
+            "2:185"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:speech",
+      "trackId": "fundamentals",
+      "title": "Thoughtful speech",
+      "titleUr": "سوچ سمجھ کر گفتگو",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "This is a bounded passage study, not a complete biography, historical chronology or fatwa. Historical context and source interpretations require qualified review.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "49:11",
+            "49:12",
+            "49:6"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "49:11",
+            "49:12",
+            "49:6"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "49:11",
+            "49:12",
+            "49:6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:wellbeing-hadith",
+      "trackId": "hadith",
+      "title": "Hadith: asking for well-being",
+      "titleUr": "حدیث: عافیت کی دعا",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "passage-study",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "Read the collection attribution, grading and explanation. This lesson cannot replace specialist Hadith study.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": [
+            "hadith:2932"
+          ]
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": [
+            "hadith:2932"
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": [
+            "hadith:2932"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "academy:sahaba-review-0",
+      "trackId": "sahaba",
+      "title": "Umar ibn Al-Khattab (RA)",
+      "titleUr": "عمر بن خطابؓ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:sahaba-review-1",
+      "trackId": "sahaba",
+      "title": "Uthman ibn Affan (RA)",
+      "titleUr": "عثمان بن عفانؓ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:sahaba-review-2",
+      "trackId": "sahaba",
+      "title": "Ali ibn Abi Talib (RA)",
+      "titleUr": "علی بن ابی طالبؓ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:sahaba-review-3",
+      "trackId": "sahaba",
+      "title": "Salman Al-Farsi (RA)",
+      "titleUr": "سلمان فارسیؓ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:sahaba-review-4",
+      "trackId": "sahaba",
+      "title": "Mus’ab ibn Umair (RA)",
+      "titleUr": "مصعب بن عمیرؓ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:sahaba-review-5",
+      "trackId": "sahaba",
+      "title": "Abu Hurairah (RA)",
+      "titleUr": "ابوہریرہؓ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:sahaba-review-6",
+      "trackId": "sahaba",
+      "title": "Aishah bint Abi Bakr (RA)",
+      "titleUr": "عائشہ بنت ابوبکرؓ",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:seerah-review-0",
+      "trackId": "seerah",
+      "title": "Arabia before Islam",
+      "titleUr": "اسلام سے پہلے عرب",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:seerah-review-1",
+      "trackId": "seerah",
+      "title": "Birth and early life",
+      "titleUr": "ولادت اور ابتدائی زندگی",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:seerah-review-2",
+      "trackId": "seerah",
+      "title": "Childhood and upbringing",
+      "titleUr": "بچپن اور پرورش",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:seerah-review-3",
+      "trackId": "seerah",
+      "title": "Early adulthood",
+      "titleUr": "جوانی کے ابتدائی سال",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:seerah-review-4",
+      "trackId": "seerah",
+      "title": "Marriage to Khadijah (RA)",
+      "titleUr": "خدیجہؓ سے نکاح",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:seerah-review-5",
+      "trackId": "seerah",
+      "title": "Beginning of the Prophetic mission",
+      "titleUr": "آغازِ نبوت",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:seerah-review-6",
+      "trackId": "seerah",
+      "title": "Early Muslims and their challenges",
+      "titleUr": "ابتدائی مسلمان اور ان کی مشکلات",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    },
+    {
+      "id": "academy:seerah-review-7",
+      "trackId": "seerah",
+      "title": "Building the Muslim community",
+      "titleUr": "مسلم معاشرے کی تشکیل",
+      "level": "beginner",
+      "outlineVersion": 1,
+      "coverage": "awaiting-review",
+      "objectives": [
+        "Identify what the source says.",
+        "Separate evidence from interpretation.",
+        "Record a question for further study."
+      ],
+      "limitation": "A reliable licensed historical source and qualified review are required before teaching this topic.",
+      "steps": [
+        {
+          "id": "0",
+          "title": "Read the evidence",
+          "sourceRefs": []
+        },
+        {
+          "id": "1",
+          "title": "Explore meaning and limits",
+          "sourceRefs": []
+        },
+        {
+          "id": "2",
+          "title": "Reflect and check understanding",
+          "sourceRefs": []
+        }
+      ]
+    }
+  ]
+}

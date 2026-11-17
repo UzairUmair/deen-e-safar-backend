@@ -5,7 +5,7 @@ export async function ingestSource(repo, input) {
   const source = proposedSource.parse(input), contentHash = hashSource(source);
   const current = await repo.one('SourcePassage', { sourceId: source.sourceId });
   if (current?.contentHash === contentHash) return 'unchanged';
-  const fields = { ...source, contentHash, terms: termsOf(source.text + ' ' + source.reference), reviewStatus: 'pending', licenseMetadata: { status: 'unverified' }, reviewNote: '', reviewedBy: '', reviewedAt: null };
+  const fields = { ...source, contentHash, terms: termsOf([source.text,source.reference,source.title,source.author,...(source.topicTags||[])].filter(Boolean).join(' ')), reviewStatus: 'pending', licenseMetadata: { status: 'unverified' }, reviewNote: '', reviewedBy: '', reviewedAt: null };
   if (current) {
     // Do not overwrite a concurrent ingest/review against another text revision.
     const updated = await repo.update('SourcePassage', { _id: current._id, contentHash: current.contentHash }, fields);

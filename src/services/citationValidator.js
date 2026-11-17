@@ -10,8 +10,8 @@ export function validateCitations(raw, retrieved) {
   for (const match of normalized.matchAll(/\b(\d{1,3}):(\d{1,3})\b/g)) {
     if (!parsed.sourceIds.some(id => allowed.get(id).sourceType === 'quran' && allowed.get(id).reference.match(/\d{1,3}:\d{1,3}/)?.[0] === match[0])) return null;
   }
-  return { ...parsed, citations: parsed.sourceIds.map(id => {
-    const s = allowed.get(id);
-    return { id, kind: s.sourceType, reference: s.reference, excerpt: s.text, language: s.language, edition: s.edition, collection: s.collection, href: s.sourceURL, external: true, attribution: s.licenseMetadata.attribution, authenticity: s.authenticity || undefined };
-  }) };
+  return { ...parsed, citations: parsed.sourceIds.map(id => sourceCitation(allowed.get(id))) };
+}
+export function sourceCitation(s) {
+  return {id:s.sourceId,title:s.title||s.collection,author:s.author||undefined,reviewStatus:'approved',kind:s.sourceType,reference:s.reference,excerpt:s.text,language:s.language,edition:s.edition,collection:s.collection,href:s.sourceURL,external:true,attribution:s.licenseMetadata.attribution,authenticity:s.authenticity||undefined};
 }

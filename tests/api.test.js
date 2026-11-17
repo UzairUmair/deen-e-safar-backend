@@ -256,3 +256,158 @@ test('bookmark and message cursors paginate without duplicates or owner leakage'
   assert.equal(messages.body.data.messages.length, 20); assert.equal(older.body.data.messages.length, 5);
   await request(app).get(`/api/ai/conversations/${conversation._id}?cursor=${messages.body.meta.nextCursor}`).set(auth('bob')).expect(404);
 });
+
+
+test('academy public catalog, bounded sources and no generation without approval', async () => {
+  const tracks=await request(app).get('/api/academy/tracks').expect(200);
+  assert.equal(tracks.body.data.tracks.length,7);
+  assert.ok(tracks.body.data.lessons.some(l=>l.id==='academy:badr'));
+  await request(app).get('/api/academy/tracks/events').expect(200);
+  const topic=await request(app).get('/api/academy/topics').query({q:'Mujhe Ghazwa-e-Badr sikhao'}).expect(200);
+  assert.equal(topic.body.data.id,'academy:badr');
+  assert.equal((await request(app).get('/api/academy/lessons/academy:patience').expect(200)).body.data.available,false);
+  await request(app).get('/api/academy/sources/quran:2:153:en').expect(404);
+  await request(app).post('/api/academy/sessions').send({lessonId:'academy:patience'}).expect(401);
+  const start=await request(app).post('/api/academy/sessions').set(auth('alice')).send({lessonId:'academy:patience'}).expect(200);
+  const result=await request(app).post('/api/academy/sessions/'+start.body.data.id+'/explain').set(auth('alice')).send({action:'explain'}).expect(200);
+  assert.equal(result.body.data.generated,false);assert.equal(provider.calls,0);
+  await approveSource();
+  assert.equal((await request(app).get('/api/academy/lessons/academy:patience').expect(200)).body.data.available,true);
+  await request(app).get('/api/academy/sources/quran:2:153:en').expect(200);
+});
+
+test('academy sessions restore per-owner state, protect versions and preserve legacy learning', async () => {
+  const start=await request(app).post('/api/academy/sessions').set(auth('alice')).send({lessonId:'academy:patience',language:'roman-ur'}).expect(200);
+  const id=start.body.data.id;
+  const again=await request(app).post('/api/academy/sessions').set(auth('alice')).send({lessonId:'academy:patience'}).expect(200);
+  assert.equal(again.body.data.id,id);
+  await request(app).get('/api/academy/sessions/'+id).set(auth('bob')).expect(404);
+  await request(app).patch('/api/academy/sessions/'+id).set(auth('bob')).send({action:'next',expectedVersion:0}).expect(404);
+  await request(app).patch('/api/academy/sessions/'+id).set(auth('alice')).send({action:'finish',expectedVersion:0}).expect(409);
+  const next=await request(app).patch('/api/academy/sessions/'+id).set(auth('alice')).send({action:'next',expectedVersion:0,language:'ur',difficulty:'advanced',note:'my private note'}).expect(200);
+  assert.equal(next.body.data.currentStep,1);assert.equal(next.body.data.selectedLanguage,'ur');
+  await request(app).patch('/api/academy/sessions/'+id).set(auth('alice')).send({action:'next',expectedVersion:0}).expect(409);
+  const prev=await request(app).patch('/api/academy/sessions/'+id).set(auth('alice')).send({action:'previous',expectedVersion:next.body.data.version,language:'roman-ur'}).expect(200);
+  assert.equal(prev.body.data.currentStep,0);assert.equal(prev.body.data.note,'my private note');
+  assert.equal((await request(app).get('/api/learning-progress').set(auth('alice'))).body.data.length,0);
+  assert.equal((await request(app).get('/api/academy/sessions').set(auth('bob'))).body.data.length,0);
+});
+
+function academyProvider() {
+  provider.complete=async function(messages,_signal,options) {
+    this.calls++; const data=JSON.parse(messages[1].content);assert.ok(!JSON.stringify(data).includes('private note'));
+    const sourceIds=data.evidence.map(s=>s.sourceId);
+    assert.equal(options.schema.additionalProperties,false);
+    if(data.request.action==='quiz')return JSON.stringify({question:'What does the passage connect with patience?',options:['Prayer','Wealth','Travel','Silence'],correct:0,explanation:'Read the supplied verse in context.',sourceIds});
+    return JSON.stringify({keyTerms:['patience','prayer'],answer:data.request.language==='ur'?'صبر اور نماز کے ذریعے مدد طلب کریں۔':data.request.language==='roman-ur'?'Sabr aur namaz ke zariye madad talab karein.':'Seek help through patience and prayer.',sourceIds,limitations:'This passage does not establish a full historical chronology.',keyPoints:['Read in context.'],uncertaintyNotes:[]});
+  };
+}
+
+test('academy grounded multilingual tutoring, bounded context, cache and source revocation', async () => {
+  await approveSource();academyProvider();
+  const start=await request(app).post('/api/academy/sessions').set(auth('alice')).send({lessonId:'academy:patience'});
+  const url='/api/academy/sessions/'+start.body.data.id+'/explain';
+  for(const language of ['en','ur','roman-ur']){const r=await request(app).post(url).set(auth('alice')).send({action:'simple',language}).expect(200);assert.equal(r.body.data.generated,true);assert.equal(r.body.data.sourceReferences[0].id,source.sourceId);}
+  assert.equal(provider.calls,3);
+  await request(app).post(url).set(auth('alice')).send({action:'simple',language:'en'}).expect(200);assert.equal(provider.calls,3);
+  await request(app).post(url).set(auth('alice')).send({action:'question',question:'Explain that connection',context:[{question:'What is patience?',answer:'Read the evidence.'}],mode:'ask'}).expect(200);
+  await request(app).post(url).set(auth('alice')).send({action:'question'}).expect(400);
+  await models.SourcePassage.updateOne({sourceId:source.sourceId},{$set:{reviewStatus:'rejected'}});
+  const revoked=await request(app).post(url).set(auth('alice')).send({action:'simple',language:'en'}).expect(200);
+  assert.equal(revoked.body.data.generated,false);assert.equal(provider.calls,4);
+});
+
+test('academy knowledge checks hide keys, score server-side and invalidate on source changes', async () => {
+  await approveSource();academyProvider();
+  const start=await request(app).post('/api/academy/sessions').set(auth('alice')).send({lessonId:'academy:patience'});
+  const path='/api/academy/sessions/'+start.body.data.id;
+  const generated=await request(app).post(path+'/explain').set(auth('alice')).send({action:'quiz'}).expect(200);
+  const q=generated.body.data.knowledgeCheck[0];assert.equal(q.correct,undefined);
+  const session=await request(app).get(path).set(auth('alice'));assert.equal(session.body.data.assessment.correct,undefined);
+  const body={assessmentId:q.id,answers:[0],submissionId:randomUUID()};
+  const result=await request(app).post(path+'/quiz').set(auth('alice')).send(body).expect(200);assert.equal(result.body.data.score,1);
+  const retry=await request(app).post(path+'/quiz').set(auth('alice')).send(body).expect(200);assert.equal(result.body.data.id,retry.body.data.id);
+  await request(app).post(path+'/quiz').set(auth('alice')).send({...body,score:999}).expect(400);
+  await request(app).post(path+'/quiz').set(auth('bob')).send(body).expect(404);
+  await models.SourcePassage.updateOne({sourceId:source.sourceId},{$set:{reviewStatus:'rejected'}});
+  await request(app).post(path+'/quiz').set(auth('alice')).send(body).expect(409);
+});
+
+test('academy provider failure and invalid citations fail closed; auth quotas apply', async () => {
+  await approveSource();academyProvider();
+  const start=await request(app).post('/api/academy/sessions').set(auth('alice')).send({lessonId:'academy:patience'});
+  const path='/api/academy/sessions/'+start.body.data.id+'/explain';
+  provider.complete=async()=>JSON.stringify({keyTerms:[],answer:'Untrusted claim',sourceIds:['quran:99:1:en'],limitations:'',keyPoints:[],uncertaintyNotes:[]});
+  await request(app).post(path).set(auth('alice')).send({action:'detail'}).expect(502);
+  provider.complete=async()=>{throw Error('provider secret must never escape');};
+  const failure=await request(app).post(path).set(auth('alice')).send({action:'detail'}).expect(503);assert.ok(!JSON.stringify(failure.body).includes('secret'));
+  const other=await request(app).post('/api/academy/sessions').set(auth('unverified')).send({lessonId:'academy:patience'});
+  await request(app).post('/api/academy/sessions/'+other.body.data.id+'/explain').set(auth('unverified')).send({action:'explain'}).expect(403);
+  for(let i=0;i<8;i++)await request(app).post(path).set(auth('alice')).send({action:'detail'});
+  await request(app).post(path).set(auth('alice')).send({action:'detail'}).expect(429);
+});
+
+test('academy guest import needs consent, keeps existing account progress, and deletion purges it', async () => {
+  const lesson={lessonId:'academy:patience',currentStep:1,status:'in_progress',note:'guest reflection',language:'roman-ur',difficulty:'beginner'};
+  await request(app).post('/api/academy/import').set(auth('alice')).send({consent:false,lessons:[lesson]}).expect(400);
+  await request(app).post('/api/academy/import').set(auth('alice')).send({consent:true,lessons:[lesson]}).expect(200);
+  await request(app).post('/api/academy/import').set(auth('alice')).send({consent:true,lessons:[{...lesson,currentStep:2}]}).expect(200);
+  const list=await request(app).get('/api/academy/sessions').set(auth('alice'));assert.equal(list.body.data[0].currentStep,1);
+  await request(app).delete('/api/users/me').set(auth('alice')).send({}).expect(200);
+  assert.equal(await models.LearningProgress.countDocuments({}),0);
+});
+
+
+test('academy rechecks approval after generation and rejects private context on shared cache actions', async () => {
+  await approveSource();academyProvider();const complete=provider.complete.bind(provider);
+  provider.complete=async(...args)=>{const result=await complete(...args);await models.SourcePassage.updateOne({sourceId:source.sourceId},{$set:{reviewStatus:'rejected'}});return result;};
+  const start=await request(app).post('/api/academy/sessions').set(auth('alice')).send({lessonId:'academy:patience'});
+  const path='/api/academy/sessions/'+start.body.data.id+'/explain';
+  await request(app).post(path).set(auth('alice')).send({action:'explain',context:[{question:'private',answer:'private'}]}).expect(400);
+  await request(app).post(path).set(auth('alice')).send({action:'explain'}).expect(409);
+});
+
+
+test('reviewed historical passages become available by scoped metadata without tutor rebuild; edits revoke review', async () => {
+  const proposed={sourceId:'seerah:controlled-edition:1:en',sourceType:'seerah',title:'Controlled source workflow fixture',author:'Test fixture, not a historical authority',collection:'Local test only',reference:'Fixture section 1',language:'en',text:'Controlled test fixture: verify attribution before treating a report as established.',sourceURL:'https://github.com/OpenITI/0225AH',edition:'Test fixture edition; not production content',authenticity:'Test workflow only; not scholarly verification',academyScopes:[{lessonId:'academy:abu-bakr',stepId:'0'},{lessonId:'academy:bilal',stepId:'1'}]};
+  await request(app).post('/api/admin/sources').set(auth('alice')).send(proposed).expect(403);
+  await request(app).post('/api/admin/sources').set(auth('admin')).send({...proposed,reviewStatus:'approved'}).expect(400);
+  await request(app).post('/api/admin/sources').set(auth('admin')).send({...proposed,academyScopes:[{lessonId:'academy:unknown',stepId:'0'}]}).expect(400);
+  await request(app).post('/api/admin/sources').set(auth('admin')).send({...source,sourceURL:'https://github.com/OpenITI/0225AH'}).expect(400);
+  await request(app).post('/api/admin/sources').set(auth('admin')).send({...proposed,sourceURL:'https://github.com/unrelated/publisher'}).expect(400);
+  const pending=await request(app).post('/api/admin/sources').set(auth('admin')).send(proposed).expect(201);
+  const id=pending.body.data.id, hash=pending.body.data.contentHash;
+  let detail=await request(app).get('/api/academy/lessons/academy:abu-bakr');assert.equal(detail.body.data.steps[0].available,false);
+  await request(app).patch('/api/admin/sources/'+id+'/review').set(auth('admin')).send({contentHash:hash,reviewStatus:'approved',note:'Controlled content review without rights approval.'}).expect(400);
+  await request(app).patch('/api/admin/sources/'+id+'/review').set(auth('admin')).send({contentHash:hash,reviewStatus:'approved',licenseMetadata:licensing,note:'Controlled test content and license review; not production approval.'}).expect(200);
+  detail=await request(app).get('/api/academy/lessons/academy:abu-bakr').expect(200);assert.equal(detail.body.data.steps[0].available,true);assert.equal(detail.body.data.steps[1].available,false);
+  assert.equal(detail.body.data.steps[0].sourceReferences[0].id,proposed.sourceId);
+  assert.equal(detail.body.data.steps[0].sourceReferences[0].kind,'seerah');
+  provider.complete=async function(messages){this.calls++;const evidence=JSON.parse(messages[1].content).evidence;return JSON.stringify({answer:'This fixture requires attribution checks.',sourceIds:evidence.map(s=>s.sourceId),limitations:'Controlled fixture, not a historical biography.',keyTerms:[],keyPoints:[],uncertaintyNotes:[]});};
+  const start=await request(app).post('/api/academy/sessions').set(auth('alice')).send({lessonId:'academy:abu-bakr'}).expect(200);
+  const url='/api/academy/sessions/'+start.body.data.id;
+  const answer=await request(app).post(url+'/explain').set(auth('alice')).send({action:'explain'}).expect(200);assert.equal(answer.body.data.generated,true);
+  const edited=await request(app).post('/api/admin/sources').set(auth('admin')).send({...proposed,academyScopes:[{lessonId:'academy:abu-bakr',stepId:'1'}]}).expect(201);
+  assert.equal(edited.body.data.reviewStatus,'pending');assert.equal(edited.body.data.licenseMetadata.status,'unverified');assert.notEqual(edited.body.data.contentHash,hash);
+  await request(app).patch('/api/admin/sources/'+id+'/review').set(auth('admin')).send({contentHash:hash,reviewStatus:'approved',licenseMetadata:licensing,note:'Stale review must fail.'}).expect(409);
+  const revoked=await request(app).post(url+'/explain').set(auth('alice')).send({action:'explain'}).expect(200);assert.equal(revoked.body.data.generated,false);
+  assert.equal(provider.calls,1);
+});
+
+test('academy bookmarks use existing owner-scoped collection and learning preferences persist with validation', async () => {
+  const saved=await request(app).post('/api/bookmarks').set(auth('alice')).send({contentType:'lesson',contentRef:'academy:patience'}).expect(201);
+  await request(app).post('/api/bookmarks').set(auth('alice')).send({contentType:'lesson',contentRef:'academy:invented'}).expect(400);
+  await request(app).delete('/api/bookmarks/'+saved.body.data.id).set(auth('bob')).expect(404);
+  const list=await request(app).get('/api/bookmarks').set(auth('alice')).expect(200);
+  assert.equal(list.body.data.filter(b=>b.contentType==='lesson').length,1);
+  await request(app).patch('/api/users/me').set(auth('alice')).send({preferences:{learning:{language:'roman-ur',difficulty:'intermediate',reading:'large',showSources:false}}}).expect(200);
+  const profile=await request(app).get('/api/users/me').set(auth('alice')).expect(200);
+  assert.equal(profile.body.data.preferences.learning.language,'roman-ur');
+  assert.equal(profile.body.data.preferences.quran.arabicSize,34);
+  await request(app).patch('/api/users/me').set(auth('alice')).send({preferences:{learning:{showSources:true}}}).expect(200);
+  const merged=await request(app).get('/api/users/me').set(auth('alice')).expect(200);
+  assert.equal(merged.body.data.preferences.learning.language,'roman-ur');
+  assert.equal(merged.body.data.preferences.learning.showSources,true);
+  await request(app).patch('/api/users/me').set(auth('alice')).send({preferences:{learning:{language:'invalid',difficulty:'beginner',reading:'large',showSources:true}}}).expect(400);
+  await request(app).delete('/api/bookmarks/'+saved.body.data.id).set(auth('alice')).expect(200);
+});
